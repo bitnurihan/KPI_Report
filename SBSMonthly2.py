@@ -2,7 +2,6 @@ from datetime import datetime, date, timedelta
 from openpyxl import load_workbook
 from copy import copy
 import xlrd
-from xlsxwriter.utility import xl_range
 
 
 def read_data_from_excel(write_file_name):
@@ -67,6 +66,40 @@ def get_zero_month():
     return str(month)
 
 
+def write_formulas():
+    global row, col
+    row = get_work_line()
+    col = 1
+    alphabet_list = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T',
+                     'U', 'V', 'W', 'X', 'Y', 'Z']
+    for colunm in range(2, 13):
+        formulas = '=%s%d/$N$%d' % (alphabet_list[colunm], row, row)
+        formulas_cell = worksheet_write.cell(row + 1, col + 2)
+        formulas_cell.value = formulas
+        col += 1
+
+    worksheet_write.cell(row, 13).value = '=N%d-SUM(C%d:L%d)+J%d' % (row, row, row, row)
+
+    worksheet_write.cell(row, 15).value = '=SUM(C%d:M%d)-J%d' % (row, row, row)
+
+    worksheet_write.cell(row, 16).value = '=O%d=N%d' % (row, row)
+
+    worksheet_write.cell(row+1, 15).value = '=SUM(C%d:M%d)-J%d' % (row+1, row+1, row+1)
+
+
+def get_style():
+    global row, col, i, j
+    row = get_work_line()
+    col = 1
+    for i in range(2):
+        for j in range(16):
+            worksheet_write.cell(row, col)._style = copy(worksheet_write.cell(row - 2, col)._style)
+            col += 1
+
+        row += 1
+        col = 1
+
+
 ###1. 기존전시간대시청률(06-11,17-24)
 write_excel_file = load_workbook(filename=r'C:\Users\hanbi01\Desktop\한빛누리\(매월)SBS월간업데이트\MonthlyReport2.xlsx')
 
@@ -75,33 +108,19 @@ worksheet_write = write_excel_file[r'기존전시간대시청률(06-11,17-24)']
 
 paste_to_excel(get_work_line(), 3)
 
-### 셀 스타일 복사해서 붙여넣기
-work_line = get_work_line()
-row = get_work_line()
-col = 1
 
-for i in range(2):
-    for j in range(16):
-        worksheet_write.cell(row, col)._style = copy(worksheet_write.cell(row - 2, col)._style)
-        col += 1
-
-    row += 1
-    col = 1
-
-
+get_style()  #셀 스타일 복사해서 붙여넣기
 
 row = get_work_line()
-col = 1
+worksheet_write.cell(row, 14).value = copy(worksheet_read.cell(rowx=3, colx=14).value)  # N값 넣기
 
-for i in range(1):
-    for j in range(16):
-        worksheet_write.cell(row+1, col).value = copy(worksheet_write.cell(row - 1, col).value)
-        col += 1
-    print(worksheet_write.cell(row+1, col).value)
+write_formulas()  # 함수넣기
+
 
 hidden_cells()  # 셀숨기기
 
 (worksheet_write.cell(row=get_work_line(), column=2)).value = "Viewership"  ##cell마다 viewership 넣기
+(worksheet_write.cell(row=get_work_line()+1, column=2)).value = "Market Share"  ##cell마다 Market Share 넣기
 
 date_cell = worksheet_write.cell(row=(get_work_line()), column=1)  ## 날짜넣기
 date_cell.value = "{}.{}".format(datetime.now().year, get_zero_month())

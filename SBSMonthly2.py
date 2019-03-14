@@ -35,8 +35,15 @@ def paste_to_excel(row, col):
         print()
 
 
-def get_work_line():
-    start_line = 376
+def get_work_line(work_sheet_name):
+
+    if work_sheet_name == r'기존전시간대시청률(06-11,17-24)':
+        start_line = 376
+    elif work_sheet_name == r'추가전시간대시청률(06-25)':
+        start_line = 116
+    else:
+        return
+
     init_year = 2019
     current_year = datetime.now().year
     current_month = datetime.now().month
@@ -68,7 +75,7 @@ def get_zero_month():
 
 def write_formulas():
     global row, col
-    row = get_work_line()
+    row = get_work_line(work_sheet_name=worksheet_write.title)
     col = 1
     alphabet_list = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T',
                      'U', 'V', 'W', 'X', 'Y', 'Z']
@@ -89,7 +96,7 @@ def write_formulas():
 
 def get_style():
     global row, col, i, j
-    row = get_work_line()
+    row = get_work_line(work_sheet_name=worksheet_write.title)
     col = 1
     for i in range(2):
         for j in range(16):
@@ -101,13 +108,13 @@ def get_style():
 
 
 def setting_date():
-    date_cell = worksheet_write.cell(row=(get_work_line()), column=1)
+    date_cell = worksheet_write.cell(row=(get_work_line(work_sheet_name=worksheet_write.title)), column=1)
     date_cell.value = "{}.{}".format(datetime.now().year, get_zero_month())
 
 
 def cell_labeling():
-    (worksheet_write.cell(row=get_work_line(), column=2)).value = "Viewership"  # cell마다 viewership 넣기
-    (worksheet_write.cell(row=get_work_line() + 1, column=2)).value = "Market Share"  # cell마다 Market Share 넣기
+    (worksheet_write.cell(row=get_work_line(work_sheet_name=worksheet_write.title), column=2)).value = "Viewership"  # cell마다 viewership 넣기
+    (worksheet_write.cell(row=get_work_line(work_sheet_name=worksheet_write.title) + 1, column=2)).value = "Market Share"  # cell마다 Market Share 넣기
 
 
 ###1. 기존전시간대시청률(06-11,17-24)
@@ -116,11 +123,11 @@ write_excel_file = load_workbook(filename=r'C:\Users\hanbi01\Desktop\한빛누�
 read_data_from_excel(r'C:\Users\hanbi01\Desktop\한빛누리\(매월)SBS월간업데이트\1.xls')
 worksheet_write = write_excel_file[r'기존전시간대시청률(06-11,17-24)']
 
-paste_to_excel(get_work_line(), 3)
+paste_to_excel(get_work_line(worksheet_write.name), 3)
 
 get_style()  # 셀 스타일 복사해서 붙여넣기
 
-row = get_work_line()
+row = get_work_line(work_sheet_name=worksheet_write.title)
 worksheet_write.cell(row, 14).value = copy(worksheet_read.cell(rowx=3, colx=14).value)  # N값 넣기
 
 write_formulas()  # 함수넣기
@@ -137,11 +144,11 @@ setting_date()  # 날짜넣기
 read_data_from_excel(r'C:\Users\hanbi01\Desktop\한빛누리\(매월)SBS월간업데이트\1_1.xls')
 worksheet_write = write_excel_file[r'추가전시간대시청률(06-25)']
 
-paste_to_excel(get_work_line(), 3)
+paste_to_excel(get_work_line(work_sheet_name=worksheet_write.title), 3)
 
 get_style()  # 셀 스타일 복사해서 붙여넣기
 
-row = get_work_line()
+row = get_work_line(work_sheet_name=worksheet_write.title)
 worksheet_write.cell(row, 14).value = copy(worksheet_read.cell(rowx=3, colx=14).value)  # N값 넣기
 
 write_formulas()  # 함수넣기

@@ -126,25 +126,9 @@ def get_style():
 
 def get_style_2():  # 자사케이블 시청률을 위한 style setting 툴/ 2월에만 작업 됨
     global row, col, i, j
-    row = get_work_line_2() + 8
-    col = 4
-    alphabet_list = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T',
-                     'U', 'V', 'W', 'X', 'Y', 'Z']
-    for colunm in range(3, 6):
-        formulas = '=AVERAGE(%s%d,%s%d,%s%d,%s%d)' % (alphabet_list[colunm], row-8, alphabet_list[colunm], row-6,
-                                                      alphabet_list[colunm], row-4, alphabet_list[colunm], row-2)
-        formulas_cell = worksheet_write.cell(row, col)
-        formulas_cell.value = formulas
-        col += 1
 
-    row = get_work_line_2() + 9
-    col = 4
-    for colunm in range(3, 6):
-        formulas = '=AVERAGE(%s%d,%s%d,%s%d,%s%d)' % (alphabet_list[colunm], row-8, alphabet_list[colunm], row-6,
-                                                      alphabet_list[colunm], row-4, alphabet_list[colunm], row-2)
-        formulas_cell = worksheet_write.cell(row, col)
-        formulas_cell.value = formulas
-        col += 1
+    copy_formulas(8)
+    copy_formulas(9)
 
     row = get_work_line_2()  # 선 스타일 복사
     col = 1
@@ -169,6 +153,20 @@ def get_style_2():  # 자사케이블 시청률을 위한 style setting 툴/ 2�
     (worksheet_write.cell(row=get_work_line_2()+8, column=1)).value = "%d년 연간" % datetime.now().year
     (worksheet_write.cell(row=get_work_line_2()+8, column=3)).value = "Viewership"
     (worksheet_write.cell(row=get_work_line_2()+9, column=3)).value = "Market Share"
+
+
+def copy_formulas(x1):
+    global row, col
+    row = get_work_line_2() + x1
+    col = 4
+    alphabet_list = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T',
+                     'U', 'V', 'W', 'X', 'Y', 'Z']
+    for colunm in range(3, 6):
+        formulas = '=AVERAGE(%s%d,%s%d,%s%d,%s%d)' % (alphabet_list[colunm], row - 8, alphabet_list[colunm], row - 6,
+                                                      alphabet_list[colunm], row - 4, alphabet_list[colunm], row - 2)
+        formulas_cell = worksheet_write.cell(row, col)
+        formulas_cell.value = formulas
+        col += 1
 
 
 def setting_date():
@@ -229,7 +227,8 @@ read_excel_file = xlrd.open_workbook(r'C:\Users\hanbi01\Desktop\한빛누리\(�
 worksheet_read = read_excel_file.sheet_by_name('전체 수도권 (P) - CATV가구(N) (')
 worksheet_write = write_excel_file[r'자사케이블 시청률']
 
-get_style_2()  # 스타일 복사하기
+if datetime.now().month == 2:
+    get_style_2()  # 스타일 복사하기
 
 row = 3
 col = 4

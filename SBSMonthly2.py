@@ -126,7 +126,6 @@ def get_style():
 
 def get_style_2():  # 자사케이블 시청률을 위한 style setting 툴/ 2월에만 작업 됨
     global row, col, i, j
-
     row = get_work_line_2() + 8
     col = 4
     alphabet_list = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T',

@@ -2,6 +2,7 @@ from datetime import datetime, date, timedelta
 from openpyxl import load_workbook
 from copy import copy
 import xlrd
+from xlsxwriter.utility import xl_range
 
 
 def read_data_from_excel(write_file_name):
@@ -75,7 +76,7 @@ worksheet_write = write_excel_file[r'기존전시간대시청률(06-11,17-24)']
 paste_to_excel(get_work_line(), 3)
 
 ### 셀 스타일 복사해서 붙여넣기
-
+work_line = get_work_line()
 row = get_work_line()
 col = 1
 
@@ -87,25 +88,22 @@ for i in range(2):
     row += 1
     col = 1
 
-work_line = get_work_line()
+
 
 row = get_work_line()
 col = 1
 
 for i in range(1):
     for j in range(16):
-        worksheet_write.cell(row + 1, col).value = copy(
-            worksheet_write.cell(row - 1, col).value)  # 이렇게 했더니 379번줄 그대로 가져와서 문제생김.. -_-
+        worksheet_write.cell(row+1, col).value = copy(worksheet_write.cell(row - 1, col).value)
         col += 1
+    print(worksheet_write.cell(row+1, col).value)
 
+hidden_cells()  # 셀숨기기
 
+(worksheet_write.cell(row=get_work_line(), column=2)).value = "Viewership"  ##cell마다 viewership 넣기
 
-hidden_cells() #셀숨기기
-
-(worksheet_write.cell(row=get_work_line(), column=2)).value = "Viewership" ##cell마다 viewership 넣기
-
-date_cell = worksheet_write.cell(row=(get_work_line()), column=1) ## 날짜넣기
+date_cell = worksheet_write.cell(row=(get_work_line()), column=1)  ## 날짜넣기
 date_cell.value = "{}.{}".format(datetime.now().year, get_zero_month())
-
 
 write_excel_file.save('testfile2.xlsx')

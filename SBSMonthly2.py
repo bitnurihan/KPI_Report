@@ -37,7 +37,7 @@ def paste_to_excel(row, col):
 
 def get_work_line():
     start_line = 376
-    init_year = 2019  # 19년 1월 378라인
+    init_year = 2019
     current_year = datetime.now().year
     current_month = datetime.now().month
     extra_line = 0
@@ -100,6 +100,16 @@ def get_style():
         col = 1
 
 
+def setting_date():
+    date_cell = worksheet_write.cell(row=(get_work_line()), column=1)
+    date_cell.value = "{}.{}".format(datetime.now().year, get_zero_month())
+
+
+def cell_labeling():
+    (worksheet_write.cell(row=get_work_line(), column=2)).value = "Viewership"  # cell마다 viewership 넣기
+    (worksheet_write.cell(row=get_work_line() + 1, column=2)).value = "Market Share"  # cell마다 Market Share 넣기
+
+
 ###1. 기존전시간대시청률(06-11,17-24)
 write_excel_file = load_workbook(filename=r'C:\Users\hanbi01\Desktop\한빛누리\(매월)SBS월간업데이트\MonthlyReport2.xlsx')
 
@@ -108,21 +118,39 @@ worksheet_write = write_excel_file[r'기존전시간대시청률(06-11,17-24)']
 
 paste_to_excel(get_work_line(), 3)
 
-
-get_style()  #셀 스타일 복사해서 붙여넣기
+get_style()  # 셀 스타일 복사해서 붙여넣기
 
 row = get_work_line()
 worksheet_write.cell(row, 14).value = copy(worksheet_read.cell(rowx=3, colx=14).value)  # N값 넣기
 
 write_formulas()  # 함수넣기
 
+hidden_cells()  # 셀숨기기
+
+cell_labeling()  # cell마다 viewership, Market Share 넣기
+
+setting_date()  # 날짜넣기
+
+
+###2. 추가전시간대시청률(06-25)
+
+read_data_from_excel(r'C:\Users\hanbi01\Desktop\한빛누리\(매월)SBS월간업데이트\1_1.xls')
+worksheet_write = write_excel_file[r'추가전시간대시청률(06-25)']
+
+paste_to_excel(get_work_line(), 3)
+
+get_style()  # 셀 스타일 복사해서 붙여넣기
+
+row = get_work_line()
+worksheet_write.cell(row, 14).value = copy(worksheet_read.cell(rowx=3, colx=14).value)  # N값 넣기
+
+write_formulas()  # 함수넣기
 
 hidden_cells()  # 셀숨기기
 
-(worksheet_write.cell(row=get_work_line(), column=2)).value = "Viewership"  ##cell마다 viewership 넣기
-(worksheet_write.cell(row=get_work_line()+1, column=2)).value = "Market Share"  ##cell마다 Market Share 넣기
+cell_labeling()  # cell마다 viewership, Market Share 넣기
 
-date_cell = worksheet_write.cell(row=(get_work_line()), column=1)  ## 날짜넣기
-date_cell.value = "{}.{}".format(datetime.now().year, get_zero_month())
+setting_date()  # 날짜넣기
+
 
 write_excel_file.save('testfile2.xlsx')

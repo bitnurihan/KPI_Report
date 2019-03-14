@@ -1,4 +1,4 @@
-from datetime import datetime, date, timedelta
+from datetime import datetime, date
 from openpyxl import load_workbook
 from copy import copy
 import xlrd
@@ -58,7 +58,7 @@ def get_work_line(work_sheet_name):
     return start_line + (current_year - init_year) * 34 + (current_month - 1) * 2 + extra_line
 
 
-def get_work_line_2():
+def get_work_line_2():  # 자사케이블 시청률을 위한 work_line setting 툴
     start_line = 170
     init_year = 2019
     current_year = datetime.now().year

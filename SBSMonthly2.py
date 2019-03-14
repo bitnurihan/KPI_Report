@@ -98,14 +98,14 @@ for i in range(1):
             worksheet_write.cell(row - 1, col).value)  # 이렇게 했더니 379번줄 그대로 가져와서 문제생김.. -_-
         col += 1
 
+
+
 hidden_cells() #셀숨기기
 
-(worksheet_write.cell(row=get_work_line(), column=2)).value = "Viewership"
-
+(worksheet_write.cell(row=get_work_line(), column=2)).value = "Viewership" ##cell마다 viewership 넣기
 
 date_cell = worksheet_write.cell(row=(get_work_line()), column=1) ## 날짜넣기
-
-
 date_cell.value = "{}.{}".format(datetime.now().year, get_zero_month())
+
 
 write_excel_file.save('testfile2.xlsx')

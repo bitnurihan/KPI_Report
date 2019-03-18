@@ -104,7 +104,11 @@ def write_formulas():
 
     if datetime.now().month == 1:  # 연간, 분기, 월간 별로
         formula_range = 3
-    elif datetime.now().month == (4, 7, 11):
+    elif datetime.now().month == 4:
+        formula_range = 2
+    elif datetime.now().month == 7:
+        formula_range = 2
+    elif datetime.now().month == 11:
         formula_range = 2
     else:
         formula_range = 1

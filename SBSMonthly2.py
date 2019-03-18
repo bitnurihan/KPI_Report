@@ -344,22 +344,17 @@ write_formulas()  # 함수넣기
 
 hidden_cells()  # 셀숨기기
 
-if datetime.now().month == 1:
-    get_style_quarter(work_sheet_name=worksheet_write.title)
-    write_formulas_quarter()
-elif datetime.now().month == 4:
-    get_style_quarter(work_sheet_name=worksheet_write.title)
-    write_formulas_quarter()
-elif datetime.now().month == 7:
-    get_style_quarter(work_sheet_name=worksheet_write.title)
-    write_formulas_quarter()
-elif datetime.now().month == 11:
-    get_style_quarter(work_sheet_name=worksheet_write.title)
-    write_formulas_quarter()
+target_month = [1, 4, 7, 11]
 
-if datetime.now().month == 1:
-    get_style_year(work_sheet_name=worksheet_write.title)
-    write_formulas_year()
+for month in target_month:  # month는 target_month를 담아두는 기능
+    if datetime.now().month == month:
+        get_style_quarter(work_sheet_name=worksheet_write.title)
+        write_formulas_quarter()
+
+        if month == 1:
+            get_style_year(work_sheet_name=worksheet_write.title)
+            write_formulas_year()
+
 
 
 ## 2. 추가전시간대시청률(06-25)
@@ -378,22 +373,15 @@ write_formulas()  # 함수넣기
 
 hidden_cells()  # 셀숨기기
 
-if datetime.now().month == 1:
-    get_style_quarter(work_sheet_name=worksheet_write.title)
-    write_formulas_quarter()
-elif datetime.now().month == 4:
-    get_style_quarter(work_sheet_name=worksheet_write.title)
-    write_formulas_quarter()
-elif datetime.now().month == 7:
-    get_style_quarter(work_sheet_name=worksheet_write.title)
-    write_formulas_quarter()
-elif datetime.now().month == 11:
-    get_style_quarter(work_sheet_name=worksheet_write.title)
-    write_formulas_quarter()
+for month in target_month:
+    if datetime.now().month == month:
+        get_style_quarter(work_sheet_name=worksheet_write.title)
+        write_formulas_quarter()
 
-if datetime.now().month == 1:
-    get_style_year(work_sheet_name=worksheet_write.title)
-    write_formulas_year()
+        if month == 1:
+            get_style_year(work_sheet_name=worksheet_write.title)
+            write_formulas_year()
+
 
 
 ## 3. 자사케이블 시청률

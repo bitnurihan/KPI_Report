@@ -154,7 +154,7 @@ paste_data_from_value_different_program_name('주말드라마')
 
 copy_data_value_from_raw_data('1_7.xlsx')
 
-paste_data_from_value_sbs_news()
+paste_data_from_value_sbs_news() ##주줄 주말 안됨..
 
 copy_data_value_from_raw_data('1_8.xlsx')
 paste_data_from_value_different_program_name('모닝와이드 2부(평일)')

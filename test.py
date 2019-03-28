@@ -90,30 +90,13 @@ def paste_data_from_value_different_program_name(title_name):
                     paste_file_sheet.cell(row=row, column=col + i).value = channel[i + 1]
 
                 if title_name == '주말드라마':  # 주말드라마는 하루 4회 방영으로 *2 해주어야 함
-                    counting = paste_file_sheet.cell(row=row, column=9).value
-                    counting += counting
+                    counting = paste_file_sheet.cell(row=row, column=9)
+                    counting.value = int(counting.value) * 2
 
 
 def paste_data_from_value_sbs_news():
     global row
-    for dictionary in summary_row_list:
-        channel = list(dictionary.values())
-        print()
 
-        for row in range(17, 80):
-            title = paste_file_sheet.cell(row=row, column=2).value
-
-            if title == 'SBS 8뉴스(평일)':
-                channel[0] = 'Work week'
-                col = 3
-                for i in range(8):
-                    paste_file_sheet.cell(row=row, column=col + i).value = channel[i + 1]
-
-            elif title == 'SBS 8뉴스(주말)':
-                channel[0] = 'Week end'
-                col = 3
-                for i in range(8):
-                    paste_file_sheet.cell(row=row, column=col + i).value = channel[i + 1]
 
 
 paste_file = load_workbook(r'C:\Users\hanbi01\Desktop\한빛누리\(분기)KPI\KPI.xlsx')
@@ -154,7 +137,25 @@ paste_data_from_value_different_program_name('주말드라마')
 
 copy_data_value_from_raw_data('1_7.xlsx')
 
-paste_data_from_value_sbs_news() ##주줄 주말 안됨..
+for dictionary in summary_row_list:
+    channel = list(dictionary.values())
+
+    for row in range(17, 80):
+        title = paste_file_sheet.cell(row=row, column=2).value
+
+        if title == 'SBS 8뉴스(평일)':
+            if channel[0] == 'Work week':
+                col = 3
+                for i in range(8):
+                    paste_file_sheet.cell(row=row, column=col + i).value = channel[i + 1]
+
+        elif title == 'SBS 8뉴스(주말)':
+            if channel[0] == 'Week end':
+                col = 3
+                for i in range(8):
+                    paste_file_sheet.cell(row=row, column=col + i).value = channel[i + 1]
+
+
 
 copy_data_value_from_raw_data('1_8.xlsx')
 paste_data_from_value_different_program_name('모닝와이드 2부(평일)')

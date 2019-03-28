@@ -1,6 +1,5 @@
 from openpyxl import load_workbook
 from copy import copy
-from datetime import datetime
 
 
 def copy_data_value_from_raw_data(write_file_name):

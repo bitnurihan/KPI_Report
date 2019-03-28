@@ -1,7 +1,6 @@
 import pyexcel
 from openpyxl import load_workbook
 import os
-from collections import Counter
 
 # *.xls -> *.xlsx
 path_dir = r'C:\Users\hanbi01\Desktop\한빛누리\(분기)KPI\raw_data'

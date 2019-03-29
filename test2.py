@@ -21,19 +21,19 @@ def copy_data_value_from_raw_data(write_file_name):
             total_duration += duration_sum
 
         if program_name is not None:
-            append_dictionary(copy_data_sheet, date_list, duration_sum, program_name, row, summary_row_list, total_duration)
+            append_dictionary(copy_data_sheet, date_list, duration_sum, program_name, row, summary_row_list,
+                              total_duration)
 
         if channel_name is not None:
-            append_dictionary(copy_data_sheet, date_list, duration_sum, channel_name, row, summary_row_list, total_duration)
-
-        total_duration = 0
-        date_list = []
+            append_dictionary(copy_data_sheet, date_list, duration_sum, channel_name, row, summary_row_list,
+                              total_duration)
 
 
 def append_dictionary(copy_data_sheet, date_list, duration_sum, program_name, row, summary_row_list, total_duration):
     if program_name.startswith('Summary'):  # Summary로 시작하는 행 찾아서 프로그램명 넣고 row 찾기
         dict_cntr = list(set(date_list))
         counting = len(dict_cntr) - dict_cntr.count(None)
+
         summary_row_list.append(dict(
             program_name=program_name[8:],
             indi_amr=copy_data_sheet.cell(row=row + 4, column=8).value,
@@ -45,6 +45,9 @@ def append_dictionary(copy_data_sheet, date_list, duration_sum, program_name, ro
             duplication_count=counting,
             total_duration=total_duration - duration_sum)
         )
+
+        total_duration = 0
+        date_list = []
 
 
 def paste_data_from_value():
@@ -105,7 +108,6 @@ for copy_file in copy_file_list:
     copy_data_value_from_raw_data(copy_file)
     paste_data_from_value()
 
-
 copy_program_list = [['1_2.xlsx', '정글의 법칙'],
                      ['1_3.xlsx', 'SBS 월화드라마'],
                      ['1_4.xlsx', 'SBS 수목드라마'],
@@ -118,7 +120,6 @@ for file_name, program_name in copy_program_list:
     copy_data_value_from_raw_data(file_name)
     paste_data_from_value_different_program_name(program_name)
 
-
 # 망가진 스타일 복사
 paste_file_style = load_workbook(r'C:\Users\hanbi01\Desktop\한빛누리\(분기)KPI\KPI.xlsx')
 paste_file_sheet_style = paste_file['4분기']
@@ -129,7 +130,8 @@ col = 1
 
 for i in range(100):
     for j in range(12):
-        paste_file_sheet.cell(row=row, column=col)._style = copy(paste_file_sheet_style.cell(row=row, column=col)._style)
+        paste_file_sheet.cell(row=row, column=col)._style = copy(
+            paste_file_sheet_style.cell(row=row, column=col)._style)
         col += 1
 
     row += 1

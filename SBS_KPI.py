@@ -19,14 +19,14 @@ def copy_data_value_from_raw_data(write_file_name):
         date_count = copy_data_sheet.cell(row=row + 4, column=5).value
         date_list.append(date_count)
 
-        if duration_sum is None:  # duration 셀 더하기
+        if duration_sum is None:  # sum duration cells
             pass
         else:
             total_duration += duration_sum
 
         if program_name is None:
             pass
-        elif program_name.startswith('Summary'):  # Summary로 시작하는 행 찾아서 프로그램명 넣고 row 찾기
+        elif program_name.startswith('Summary'):  # find row the cell value starts with 'Summary' and copy program name
             dict_cntr = list(set(date_list))
             counting = len(dict_cntr) - dict_cntr.count(None)
             summary_row_list.append(dict(
@@ -45,7 +45,7 @@ def copy_data_value_from_raw_data(write_file_name):
 
         if channel_name is None:
             pass
-        elif channel_name.startswith('Summary'):  # Summary로 시작하는 행 찾아서 프로그램명 넣고 row 찾기
+        elif channel_name.startswith('Summary'):  # find row the cell value starts with 'Summary' and copy program name
             dict_cntr = list(set(date_list))
             counting = len(dict_cntr) - dict_cntr.count(None)
             summary_row_list.append(dict(
@@ -81,7 +81,6 @@ def paste_data_from_value_different_program_name(title_name):
     global row
     for dictionary in summary_row_list:
         channel = list(dictionary.values())
-        print()
 
         for row in range(17, 100):
             title = paste_file_sheet.cell(row=row, column=2).value
@@ -90,10 +89,6 @@ def paste_data_from_value_different_program_name(title_name):
                 col = 3
                 for i in range(8):
                     paste_file_sheet.cell(row=row, column=col + i).value = channel[i + 1]
-
-                # if title_name == '주말드라마':  # 주말드라마는 하루 4회 방영으로 *2 해주어야 함
-                #     counting = paste_file_sheet.cell(row=row, column=9)
-                #     counting.value = int(counting.value) * 2
 
 
 def paste_data_from_value_sbs_news():
@@ -130,7 +125,8 @@ def copy_paste_annual_data(read_file_name):
     copy_data_sheet.delete_rows(20)
     copy_data_sheet.delete_rows(16)
     copy_data_sheet.delete_rows(13)
-
+    
+    # copy data from raw files
     row = 13
     col = 4
     array = []
@@ -145,8 +141,8 @@ def copy_paste_annual_data(read_file_name):
         inner_array = []
         col = 4
         row += 1
-    print(array)
-
+    
+    # paste data to complete file
     row = 4
     col = 2
 
@@ -171,12 +167,14 @@ def copy_paste_annual_data(read_file_name):
 def copy_paste_annual_data_primetime(read_file_name):
     global copy_data_file, copy_data_sheet, col, array, inner_array, i, j, value, test
     copy_data_file = load_workbook(read_file_name)
-
     copy_data_sheet = copy_data_file['(P) - 채널별시청률_']
+    
+    # deleted unusing rows
     copy_data_sheet.delete_rows(20)
     copy_data_sheet.delete_rows(16)
     copy_data_sheet.delete_rows(13)
-
+    
+    # copy data from raw files
     row = 13
     col = 4
     array = []
@@ -191,8 +189,8 @@ def copy_paste_annual_data_primetime(read_file_name):
         inner_array = []
         col = 4
         row += 1
-    print(array)
-
+    
+    # paste data to complete file
     row = 4
     col = 4
 
@@ -223,7 +221,7 @@ new_file_list = os.listdir(new_path_dir)
 for file in file_list:
     pyexcel.save_book_as(file_name=("%s\%s" % (path_dir, file)), dest_file_name="%s\%s.xlsx" % (new_path_dir, file.split('.')[0]))
 
-# 쓸모없는 열 지우기
+# delete unusing cols
 for file in new_file_list:
     new_file = load_workbook("%s\%s" % (new_path_dir, file))
 
@@ -243,8 +241,7 @@ for file in new_file_list:
         new_file.save("%s" % file)
 
 
-# 파일 내용 복사하기
-
+# copy from data files
 paste_file = load_workbook(r'C:\Users\hanbi01\Desktop\한빛누리\(분기)KPI\KPI.xlsx')
 paste_file_sheet = paste_file['1']
 
@@ -272,7 +269,7 @@ paste_data_from_value_sbs_news()
 copy_paste_annual_data(r'C:\Users\hanbi01\Desktop\한빛누리\(분기)KPI\xlsx_raw_data\1_10.xlsx')
 copy_paste_annual_data_primetime(r'C:\Users\hanbi01\Desktop\한빛누리\(분기)KPI\xlsx_raw_data\1_11.xlsx')
 
-# 망가진 스타일 복사
+# copy style in excel files
 paste_file_style = load_workbook(r'C:\Users\hanbi01\Desktop\한빛누리\(분기)KPI\KPI.xlsx')
 paste_file_sheet_style = paste_file['1']
 
@@ -288,7 +285,7 @@ for i in range(100):
     row += 1
     col = 1
 
-
+# Saving complete file
 if datetime.now().month == 1:
     year = datetime.now().year - 1
 else:

@@ -12,7 +12,7 @@ def copy_data_value_from_raw_data(write_file_name):
     summary_row_list = []
     date_list = []
     total_duration = 0
-    for row in range(1, 1001):
+    for row in range(1, 2500):
         channel_name = copy_data_sheet.cell(row=row + 4, column=1).value
         program_name = copy_data_sheet.cell(row=row + 4, column=2).value
         duration_sum = copy_data_sheet.cell(row=row + 4, column=15).value
@@ -91,9 +91,9 @@ def paste_data_from_value_different_program_name(title_name):
                 for i in range(8):
                     paste_file_sheet.cell(row=row, column=col + i).value = channel[i + 1]
 
-                if title_name == '주말드라마':  # 주말드라마는 하루 4회 방영으로 *2 해주어야 함
-                    counting = paste_file_sheet.cell(row=row, column=9)
-                    counting.value = int(counting.value) * 2
+                # if title_name == '주말드라마':  # 주말드라마는 하루 4회 방영으로 *2 해주어야 함
+                #     counting = paste_file_sheet.cell(row=row, column=9)
+                #     counting.value = int(counting.value) * 2
 
 
 def paste_data_from_value_sbs_news():
@@ -214,7 +214,6 @@ def copy_paste_annual_data_primetime(read_file_name):
         col = 4
 
 
-
 # *.xls -> *.xlsx
 path_dir = r'C:\Users\hanbi01\Desktop\한빛누리\(분기)KPI\raw_data'
 file_list = os.listdir(path_dir)
@@ -248,7 +247,6 @@ for file in new_file_list:
 
 paste_file = load_workbook(r'C:\Users\hanbi01\Desktop\한빛누리\(분기)KPI\KPI.xlsx')
 paste_file_sheet = paste_file['1']
-# paste_file_sheet = paste_file['%d분기' % ((datetime.now().month - 1) / 3 + 1)]
 
 copy_file_list = ['1.xlsx', '1_1.xlsx', '1_9.xlsx']
 
@@ -277,7 +275,6 @@ copy_paste_annual_data_primetime(r'C:\Users\hanbi01\Desktop\한빛누리\(분기
 # 망가진 스타일 복사
 paste_file_style = load_workbook(r'C:\Users\hanbi01\Desktop\한빛누리\(분기)KPI\KPI.xlsx')
 paste_file_sheet_style = paste_file['1']
-# paste_file_sheet_style = paste_file_style['%d분기' % ((datetime.now().month - 1) / 3 + 1)]
 
 row = 1
 col = 1

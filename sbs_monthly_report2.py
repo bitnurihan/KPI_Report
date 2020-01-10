@@ -369,9 +369,9 @@ get_style_monthly()  # 셀 스타일 복사해서 붙여넣기
 row = get_work_line(work_sheet_name=worksheet_write.title)
 worksheet_write.cell(row, 14).value = copy(worksheet_read.cell(rowx=3, colx=14).value)  # N값 넣기
 
-write_formulas()  # 함수넣기
+write_formulas()  # insert excel function
 
-hidden_cells()  # 셀숨기기
+hidden_cells()  # hidding cols
 
 for month in target_month:
     if datetime.now().month == month:

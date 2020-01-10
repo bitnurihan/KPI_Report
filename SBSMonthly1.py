@@ -57,7 +57,7 @@ def prev_bounds(when=None):
     prev_first = date(prev_end.year, prev_end.month, 1)
     return prev_first, prev_end
 
-###1. 방송국 전시간대 시청률(평일 06:00-11:00, 17:00-24:00/ 주말 06:00-25:00)
+# sheet name : 1. 방송국 전시간대 시청률(평일 06:00-11:00, 17:00-24:00/ 주말 06:00-25:00)
 write_excel_file = load_workbook(filename =r'C:\Users\hanbi01\Desktop\한빛누리\(매월)SBS월간업데이트\MonthlyReport1.xlsx')
 
 read_data_from_excel(r'C:\Users\hanbi01\Desktop\한빛누리\(매월)SBS월간업데이트\1_3.xls')
@@ -66,18 +66,18 @@ worksheet_write = write_excel_file[r'2019년']
 paste_to_excel(11 + (month - 2), 2, 28)
 
 
-###2. 방송국 전시간대 시청률(06:00-25:00)
+# sheet name : 2. 방송국 전시간대 시청률(06:00-25:00)
 read_data_from_excel(r'C:\Users\hanbi01\Desktop\한빛누리\(매월)SBS월간업데이트\1_4.xls')
 paste_to_excel(44 + (month - 2), 2, 61)
 
 
-###3.SBS 프라임 시간대 시청률(평일 19:00-24:00, 주말 18:00-24:00)
+# sheet name : 3.SBS 프라임 시간대 시청률(평일 19:00-24:00, 주말 18:00-24:00)
 
 read_data_from_excel(r'C:\Users\hanbi01\Desktop\한빛누리\(매월)SBS월간업데이트\1_5.xls')
 paste_to_excel(77 + (month - 2), 2, 94)
 
 
-###날짜 넣기
+# input Date
 
 date_cell = worksheet_write['A3']
 date_cell.value = "분석기간 : %s ~ %s" % (prev_bounds())
